@@ -1,7 +1,6 @@
 import React from "react";
 import Icon from '@material-ui/core/Icon';
 import _ from "lodash";
-import Overlay from 'react-bootstrap/Overlay';
 class HeaderCell extends React.Component{
     constructor(props){
         super(props);
@@ -9,16 +8,28 @@ class HeaderCell extends React.Component{
         this.state={
             sortOrder: true,
             show: false,
+            filterValue: ""
         }
         this.handleFilterClick = this.handleFilterClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.onClose = this.onClose.bind(this);
+
     }
     handleFilterClick(){
         this.setState({ show: !this.state.show })
     }
+    handleChange(e){
+        console.log("input value",e.target.value);
+        this.setState({
+            filterValue: e.target.value
+        });
+    }
+    onClose(){
+        console.log("On close");
+    }
     render(){
         const {column} = this.props;
         const { show, target } = this.state;
-        console.log("width", column);
         return (
           <div className="headerCell" style={{width: `${column.width}px`}}>
             <div className="headerCellLabel" style={{width: `${column.width-40}px`}}>{column.name}</div>
@@ -31,7 +42,7 @@ class HeaderCell extends React.Component{
                     this.setState({
                         sortOrder: !this.state.sortOrder
                     });
-                  console.log("buton clicked", column.elementcode);
+                    this.props.handleSort(column.elementcode, "asc");
                 }}
               >
                 arrow_drop_up
@@ -42,7 +53,7 @@ class HeaderCell extends React.Component{
                   this.setState({
                       sortOrder: !this.state.sortOrder
                   });
-                console.log("buton clicked", column.elementcode);
+                  this.props.handleSort(column.elementcode, "dec");
               }}
             >
               arrow_drop_down
@@ -57,28 +68,6 @@ class HeaderCell extends React.Component{
               >
                 more_vert
               </Icon>
-              <Overlay target={target} show={show} placement="right">
-          {({ placement, scheduleUpdate, arrowProps, ...props }) => (
-            <div
-              {...props}
-              style={{
-                backgroundColor: "#fff",
-                padding: '2px 10px',
-                color: 'black',
-                borderRadius: 3,
-                height: "100px",
-                width: "200px",
-                border: "3px solid black",
-                ...props.style,
-              }}
-            >   
-                <div className="filterLabelDiv">
-                    <label className="filterLabel">Filter:</label>
-                    <input className="filterinput"type="text"/>
-                </div>
-            </div>
-          )}
-        </Overlay>
             </div>
             </div>
           </div>

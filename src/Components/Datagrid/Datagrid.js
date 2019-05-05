@@ -1,13 +1,22 @@
 import React from "react";
-import Header from "./Header/Header"
+import Footer from "./Footer/Footer";
 import Databody from "./Databody/Databody";
 class Datagrid extends React.Component {
-    
+    constructor(props){
+        super(props);
+        this.state={
+            pageNumber: props && props.defaultpPageNumber || 1,
+            rowsPerPage: 500
+        }
+    }
     render() {
         const {columns, data} = this.props;
         return (
         <div className="wrapper">
            <Databody columns={columns} data={data}/>
+           {
+                this.props.hasFooter && <Footer rowsPerPage={500} pageNumber={this.state.pageNumber} noOfRowsOptions={[500, 1000]} rows={data.length}/>
+            }
         </div>
         );
     }

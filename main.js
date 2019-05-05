@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="app">
     <h1>Data grid</h1>
-      <Datagrid columns={metadata} data={data} />
+      <Datagrid columns={metadata} data={data} hasFooter/>
     </div>
   );
 }
