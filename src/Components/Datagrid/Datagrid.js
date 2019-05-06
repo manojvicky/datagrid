@@ -11,9 +11,10 @@ class Datagrid extends React.Component {
     }
     render() {
         const {columns, data} = this.props;
+        const {rowsPerPage} = this.state;
         return (
         <div className="wrapper">
-           <Databody columns={columns} data={data}/>
+           <Databody columns={columns} data={data} rowsPerPage={rowsPerPage}/>
            {
                 this.props.hasFooter && <Footer rowsPerPage={500} pageNumber={this.state.pageNumber} noOfRowsOptions={[500, 1000]} rows={data.length}/>
             }
