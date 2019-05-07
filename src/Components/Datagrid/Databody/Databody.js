@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderCell from "./HeaderCell";
+import _ from "lodash";
 class Databody extends React.Component{
     constructor(props){
         super();
@@ -20,6 +21,13 @@ class Databody extends React.Component{
         this.sort = this.sort.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
 
+    }
+    componentWillReceiveProps(nextProps){
+        if(!_.isEqual(this.props.data, nextProps.data)){
+            this.setState({
+                data: nextProps.data
+            });
+        }
     }
     componentDidMount(){
         console.log("this.myDatagridBodyRef", this.myDatagridBodyRef.current)

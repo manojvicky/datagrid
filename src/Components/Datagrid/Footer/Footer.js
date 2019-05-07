@@ -5,11 +5,9 @@ class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rowsPerPageValue: props.rowsPerPage || "",
       toggle: false,
       inputToggle: false,
-      PageNumberValue: props.pageNumber,
-      inputPageNumberValue: props.pageNumber
+      inputpageNumberValue: props.pageNumber
     };
     this.rowsPerPageHandler = this.rowsPerPageHandler.bind(this);
     this.OptionsHandler = this.OptionsHandler.bind(this);
@@ -25,42 +23,42 @@ class Footer extends React.Component {
   }
   OptionsHandler(value){
     this.setState({
-      rowsPerPageValue: value,
       toggle: !this.state.toggle,
-      PageNumberValue: 1,
-      inputPageNumberValue: 1
+      inputpageNumberValue: 1
     });
+    this.props.OptionsHandler(1, value);
   }
   pages(){
     const {rows} = this.props;
-    const {rowsPerPageValue} = this.state;
-    return Math.ceil(rows/rowsPerPageValue);
+    const {rowsPerPage} = this.props;
+    return Math.ceil(rows/rowsPerPage);
   }
   firstRowNumber(){
-    const {rowsPerPageValue, PageNumberValue} = this.state;
-    return (PageNumberValue*rowsPerPageValue-rowsPerPageValue)+1;
+    const {rowsPerPage, pageNumber} = this.props;
+
+    return (pageNumber*rowsPerPage-rowsPerPage)+1;
   }
   lastRowNumber(){
-    const {rows} = this.props;
-    const {rowsPerPageValue, PageNumberValue} = this.state;
-    return (PageNumberValue*rowsPerPageValue>rows ? rows : PageNumberValue*rowsPerPageValue);
+    const {rows, rowsPerPage,pageNumber} = this.props;
+    return (pageNumber*rowsPerPage>rows ? rows : pageNumber*rowsPerPage);
   }
   navigation(pageNumber){
     this.setState({
-      PageNumberValue: pageNumber
+      inputpageNumberValue: pageNumber
     });
+    this.props.navigation(pageNumber);
   }
   render() {
-    const { rows, noOfRowsOptions } = this.props;
-    const { toggle, rowsPerPageValue, inputToggle, PageNumberValue, inputPageNumberValue } = this.state;
+    const { rows, noOfRowsOptions, rowsPerPage, pageNumber } = this.props;
+    const { toggle, inputToggle, inputpageNumberValue } = this.state;
     const optionsRenderer = noOfRowsOptions.map(option => {
       return (
         <li
           className="eachOption"
-          onClick={() => this.OptionsHandler(option)}
-          key={option}
+          onClick={() => this.OptionsHandler(option.value)}
+          key={option.value}
         >
-          {option}
+          {option.value}
         </li>
       );
     });
@@ -70,7 +68,7 @@ class Footer extends React.Component {
           <span className="rowsSpan">rows</span>
           <div className="rowsPerPage">
             <div className="defaultOption" onClick={this.rowsPerPageHandler}>
-              <span>{rowsPerPageValue}</span>
+              <span className="numberOfRowsSelected">{rowsPerPage}</span>
               {!toggle ? (
                 <Icon className="dropDownIcon">expand_more</Icon>
               ) : (
@@ -81,11 +79,11 @@ class Footer extends React.Component {
           </div>
         </div>
         <div className="pagination">
-          <button className="firstPage" onClick={()=>this.navigation(1)} disabled={PageNumberValue===1}>
+          <button className="firstPage" onClick={()=>this.navigation(1)} disabled={pageNumber===1}>
             {" "}
             <Icon className="dropDownIcon">first_page</Icon>
           </button>
-          <button className="prevPage" onClick={()=>this.navigation(PageNumberValue-1)} disabled={PageNumberValue===1}>
+          <button className="prevPage" onClick={()=>this.navigation(pageNumber-1)} disabled={pageNumber===1}>
             <Icon className="dropDownIcon">navigate_before</Icon>
           </button>
           <div className="pageDiv">
@@ -97,7 +95,7 @@ class Footer extends React.Component {
                 this.setState({ inputToggle: !this.state.inputToggle });
               }}
             >
-              {PageNumberValue}
+              {pageNumber}
             </div>
           ) : (
             <input
@@ -105,21 +103,21 @@ class Footer extends React.Component {
                 if (event.key === "Enter") {
                   this.setState({ 
                     inputToggle: !this.state.inputToggle,
-                    PageNumberValue: inputPageNumberValue===0?1:inputPageNumberValue,
-                    inputPageNumberValue: inputPageNumberValue===0?1:inputPageNumberValue,
+                    inputpageNumberValue: inputpageNumberValue===0?1:inputpageNumberValue,
                    });
+                   this.props.navigation(inputpageNumberValue===0?1:inputpageNumberValue,);
                 }
               }}
               onChange={(e)=>{
                 let { value } = e.target;
                 value=Number(value.replace(/\D+/g, '').trim());
-                if(value<=Math.ceil(rows/rowsPerPageValue)){
-                  this.setState({inputPageNumberValue: value})
+                if(value<=Math.ceil(rows/rowsPerPage)){
+                  this.setState({inputpageNumberValue: value})
                 }
               }}
               className="pageNumberInput"
               type="text"
-              value={inputPageNumberValue}
+              value={inputpageNumberValue}
             />
           )}
           <span className="slashDiv">/</span>
@@ -129,10 +127,10 @@ class Footer extends React.Component {
             }
           </div>
           </div>
-          <button className="nextPage" onClick={()=>this.navigation(PageNumberValue+1)} disabled={PageNumberValue===Math.ceil(rows/rowsPerPageValue)}>
+          <button className="nextPage" onClick={()=>this.navigation(pageNumber+1)} disabled={pageNumber===Math.ceil(rows/rowsPerPage)}>
             <Icon className="dropDownIcon">navigate_next</Icon>
           </button>
-          <button className="lastPage" onClick={()=>this.navigation(Math.ceil(rows/rowsPerPageValue))} disabled={PageNumberValue===Math.ceil(rows/rowsPerPageValue)}>
+          <button className="lastPage" onClick={()=>this.navigation(Math.ceil(rows/rowsPerPage))} disabled={pageNumber===Math.ceil(rows/rowsPerPage)}>
             <Icon className="dropDownIcon">last_page</Icon>
           </button>
         </div>
@@ -140,7 +138,7 @@ class Footer extends React.Component {
             <div className="firstOfRow">{this.firstRowNumber()}</div>
             <span className="dashSapan">-</span>
             <div className="lastOfRow">{this.lastRowNumber()}</div>
-          <span className="slashDiv extraMargin">/</span>            
+          <span className="slashDiv extraMargin">of</span>            
         <div className="noOfRows">{rows}</div>
         </div>
       </div>

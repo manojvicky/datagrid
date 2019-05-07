@@ -120,7 +120,7 @@ input.filterinput {
 }
 .defaultOption {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
   cursor: pointer;
@@ -143,6 +143,7 @@ li.eachOption {
   margin: 5px 0px;
   cursor: pointer;
   width: 100%;
+  text-align: center;
 }
 .rowsPerPageWrapper {
   display: flex;
@@ -162,8 +163,8 @@ input.pageNumberInput {
   text-align: end;
 }
 div.pageNumberInput {
-  width: 10px;
-  margin-left: 15px;
+  width: 15px;
+  margin-left: 10px;
   text-align: end;
   cursor: pointer;
 }
@@ -201,4 +202,8 @@ div.pageNumberInput {
 button:disabled,
 button[disabled]{
   cursor: initial;
+}
+.numberOfRowsSelected{
+  width: 100%;
+  text-align: center;
 }

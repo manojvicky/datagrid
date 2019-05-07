@@ -5,18 +5,49 @@ class Datagrid extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            pageNumber: props && props.defaultpPageNumber || 1,
-            rowsPerPage: 500
+            pageNumber: props && props.defaultppageNumber || 1,
+            rowsPerPage: props.noOfRowsOptions.filter(item=>item.default)[0].value,
         }
+        this.OptionsHandler = this.OptionsHandler.bind(this);
+        // this.visibleDataHandler = this.visibleDataHandler.bind(this);
+        this.navigation = this.navigation.bind(this);
+    }
+    OptionsHandler(pageNumber, value){
+        console.log("value", value);
+        this.setState({
+            rowsPerPage: value,
+            pageNumber
+          });
+    }
+    
+    // visibleDataHandler(){
+    //     const {data, pageNumber, rowsPerPage} = this.props;
+    //     let visibleData = [];
+    //     for(let i=(pageNumber*rowsPerPage-rowsPerPage); i< (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage) ; i++ ){
+    //         visibleData.push(data[i])
+    //     }
+    //     this.setState({
+    //         visibleData
+    //     });
+    // }
+    navigation(pageNumber){
+        this.setState({
+            pageNumber
+          });
     }
     render() {
-        const {columns, data} = this.props;
-        const {rowsPerPage} = this.state;
+        const {columns, data, noOfRowsOptions} = this.props;
+        const {rowsPerPage, pageNumber} = this.state;
+        let visibleData = [];
+        for(let i=(pageNumber*rowsPerPage-rowsPerPage); i< (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage) ; i++ ){
+            visibleData.push(data[i])
+        }
+        console.log("yoo", (pageNumber*rowsPerPage-rowsPerPage), (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage), visibleData);
         return (
         <div className="wrapper">
-           <Databody columns={columns} data={data} rowsPerPage={rowsPerPage}/>
+           <Databody columns={columns} data={visibleData} />
            {
-                this.props.hasFooter && <Footer rowsPerPage={500} pageNumber={this.state.pageNumber} noOfRowsOptions={[500, 1000]} rows={data.length}/>
+                this.props.hasFooter && <Footer navigation={this.navigation} rowsPerPage={rowsPerPage} OptionsHandler={this.OptionsHandler} pageNumber={this.state.pageNumber} noOfRowsOptions={noOfRowsOptions} rows={data.length}/>
             }
         </div>
         );
