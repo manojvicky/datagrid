@@ -34,8 +34,10 @@ class Footer extends React.Component {
     return Math.ceil(rows/rowsPerPage);
   }
   firstRowNumber(){
-    const {rowsPerPage, pageNumber} = this.props;
-
+    const {rowsPerPage, pageNumber, rows} = this.props;
+    if(rows===0){
+      return 0;
+    }
     return (pageNumber*rowsPerPage-rowsPerPage)+1;
   }
   lastRowNumber(){

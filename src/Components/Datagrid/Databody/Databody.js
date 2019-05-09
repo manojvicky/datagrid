@@ -30,7 +30,6 @@ class Databody extends React.Component{
         }
     }
     componentDidMount(){
-        console.log("this.myDatagridBodyRef", this.myDatagridBodyRef.current)
         this.setState({
             headerWidth: this.myDataBodyRef.current.scrollWidth,
             footerWidth: this.myDataBodyRef.current.clientWidth
@@ -38,8 +37,6 @@ class Databody extends React.Component{
     }
 
     componentDidUpdate(){
-        console.log("this.myDatagridBodyRef didUpdate", this.myDatagridBodyRef.current)
-
         if(!this.state.stopUpdate){
             const columns = this.state.columns.map(col=>{
                 col.width = this.refCollector[col.elementcode]
@@ -108,7 +105,7 @@ class Databody extends React.Component{
         });
         const rows = data.map((row, index)=>{
             return (
-                <div className={`dataGridRow dataGridRow${row.id}`} key={`dataGridRow${index}`}>
+                <div className={`dataGridRow dataGridRow${row.id}`} key={`dataGridRow${index}`} onClick={()=>{console.log("row Clicked", row)}}>
                     {
                         columns.map((col, indx)=>{
                         if(col && col.cell){

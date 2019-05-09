@@ -145,6 +145,19 @@ li.eachOption {
   width: 100%;
   text-align: center;
 }
+ul.optionsWrapper {
+  margin: 0;
+  background: white;
+  z-index: 999;
+  list-style-type: none;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-top: 0px;
+  cursor: pointer;
+}
 .rowsPerPageWrapper {
   display: flex;
   align-items: center;
@@ -206,4 +219,56 @@ button[disabled]{
 .numberOfRowsSelected{
   width: 100%;
   text-align: center;
+}
+.filterDataGrid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40px;
+}
+input.columnsInputValues {
+  height: 60%;
+  width: 30%;
+  border: 0px;
+  border-bottom: 1px solid #e0e0e0;
+  outline: none;
+  padding: 0px 10px;
+  margin-right: 15px;
+}
+.columnDropDownWrapper {
+  width: 150px;
+  height: 60%;
+  position: relative;
+}
+.viewValue {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  padding: 0px 0px 0px 5px;
+  cursor: pointer;
+  width: 100%;
+}
+ul.columnsDropDownOptions {
+  list-style-type: none;
+    background: white;
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    top: 24px;
+    width: 155px;
+}
+.eachColumn {
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 6px;
+  height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+li.eachColumn:hover {
+  background: #e0e0e0;
 }

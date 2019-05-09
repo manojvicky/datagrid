@@ -19,7 +19,6 @@ class HeaderCell extends React.Component{
         this.setState({ show: !this.state.show })
     }
     handleChange(e){
-        console.log("input value",e.target.value);
         this.setState({
             filterValue: e.target.value
         });
@@ -59,15 +58,6 @@ class HeaderCell extends React.Component{
               arrow_drop_down
             </Icon>
             }
-            </div>
-            <div className="threeDotsDiv">
-              <Icon
-                className="threeDotsIcon"
-                ref={this.attachRef}
-                onClick={this.handleFilterClick}
-              >
-                more_vert
-              </Icon>
             </div>
             </div>
           </div>

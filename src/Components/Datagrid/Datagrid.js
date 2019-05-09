@@ -9,27 +9,15 @@ class Datagrid extends React.Component {
             rowsPerPage: props.noOfRowsOptions.filter(item=>item.default)[0].value,
         }
         this.OptionsHandler = this.OptionsHandler.bind(this);
-        // this.visibleDataHandler = this.visibleDataHandler.bind(this);
         this.navigation = this.navigation.bind(this);
     }
     OptionsHandler(pageNumber, value){
-        console.log("value", value);
         this.setState({
             rowsPerPage: value,
             pageNumber
           });
     }
     
-    // visibleDataHandler(){
-    //     const {data, pageNumber, rowsPerPage} = this.props;
-    //     let visibleData = [];
-    //     for(let i=(pageNumber*rowsPerPage-rowsPerPage); i< (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage) ; i++ ){
-    //         visibleData.push(data[i])
-    //     }
-    //     this.setState({
-    //         visibleData
-    //     });
-    // }
     navigation(pageNumber){
         this.setState({
             pageNumber
@@ -42,7 +30,6 @@ class Datagrid extends React.Component {
         for(let i=(pageNumber*rowsPerPage-rowsPerPage); i< (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage) ; i++ ){
             visibleData.push(data[i])
         }
-        console.log("yoo", (pageNumber*rowsPerPage-rowsPerPage), (pageNumber*rowsPerPage>data.length ? data.length : pageNumber*rowsPerPage), visibleData);
         return (
         <div className="wrapper">
            <Databody columns={columns} data={visibleData} />
